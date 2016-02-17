@@ -12,6 +12,7 @@
 		<spring.version>4.2.4.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<el-api.version>3.0.0</el-api.version>
+		<hibernate.version>5.1.0.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -60,7 +61,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.1.0.Final</version>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
+			<version>${hibernate.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,9 @@ public class Employee {
     @Column(name="salary", scale=10, precision=2, nullable = false)
     private BigDecimal salary;
 
+    @Column(name="birth_date", nullable = false)
+    private LocalDate birthDate;
+
     @ElementCollection
     @CollectionTable(
             name="phone",
@@ -45,10 +49,11 @@ public class Employee {
     protected Employee() {
     }
 
-    public Employee(String firstName, String lastName, BigDecimal salary) {
+    public Employee(String firstName, String lastName, BigDecimal salary, LocalDate birthDate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.salary = salary;
+        this.birthDate = birthDate;
     }
 
     public Long getId() {
@@ -81,6 +86,14 @@ public class Employee {
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public List<Phone> getPhones() {

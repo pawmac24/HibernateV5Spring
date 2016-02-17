@@ -16,3 +16,5 @@ CREATE TABLE `phone` (
   KEY `k_phone_owner_id` (`owner_id`),
   CONSTRAINT `fk_phone_owner_id` FOREIGN KEY (`owner_id`) REFERENCES `employee` (`employee_id`)
 );
+
+ALTER TABLE employee ADD COLUMN birth_date DATE NOT NULL;

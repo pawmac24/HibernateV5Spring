@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
 
 /**
  * Created by pmackiewicz on 2016-02-03.
@@ -26,7 +28,9 @@ public class TestServiceImpl implements TestService {
     @Override
     public SampleDTO get() {
         logger.info("===get===");
-        Employee employee = new Employee("Bob", "Way", new BigDecimal(100.50).setScale(2));
+        Employee employee = new Employee("Bob", "Way",
+                new BigDecimal(100.50).setScale(2),
+                LocalDate.of(1981, Month.JULY, 17));
         employee.addPhone( new Phone("home", "613", "792-0001"));
         employee.addPhone( new Phone("work", "613", "494-1234"));
         entityManager.persist(employee);
@@ -35,7 +39,9 @@ public class TestServiceImpl implements TestService {
         employee.setLastName("Wayek");
         logger.info("(2)" + employee);
 
-        Employee employee2 = new Employee("Joe", "Smith", new BigDecimal(300.00).setScale(2));
+        Employee employee2 = new Employee("Joe", "Smith",
+                new BigDecimal(300.00).setScale(2),
+                LocalDate.of(1941, Month.MARCH, 25));
         employee2.addPhone( new Phone("work", "416", "892-0005"));
         entityManager.persist(employee2);
         logger.info("(3)" + employee2);
