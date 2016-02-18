@@ -6,9 +6,9 @@ import com.pm.hibernate.dto.SampleDTO;
  * Created by pmackiewicz on 2016-02-03.
  */
 public interface TestService {
-    SampleDTO get();
+    SampleDTO insertAll();
 
-    SampleDTO find();
+    SampleDTO findAll();
 
-    SampleDTO delete();
+    SampleDTO deleteAll();
 }

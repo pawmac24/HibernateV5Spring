@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * Created by pmackiewicz on 2016-02-05.
  */
 @Component
-public class MyControllerImpl implements MyController{
+public class MyControllerImpl implements MyController {
 
     public static final Logger LOG = LoggerFactory.getLogger(MyControllerImpl.class);
 
@@ -19,8 +19,20 @@ public class MyControllerImpl implements MyController{
     private TestService testService;
 
     @Override
-    public void prepare()  {
-        SampleDTO sampleDTO = testService.get();
-        LOG.info("Find " + sampleDTO);
+    public void insertAll() {
+        LOG.info("== insertAll ==");
+        testService.insertAll();
+    }
+
+    @Override
+    public void deleteAll() {
+        LOG.info("== deleteAll ==");
+        testService.deleteAll();
+    }
+
+    @Override
+    public void findAll() {
+        LOG.info("== findAll ==");
+        testService.findAll();
     }
 }

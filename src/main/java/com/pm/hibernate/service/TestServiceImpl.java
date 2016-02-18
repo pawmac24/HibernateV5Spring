@@ -1,17 +1,20 @@
 package com.pm.hibernate.service;
 
 import com.pm.hibernate.dto.SampleDTO;
-import com.pm.hibernate.model.Employee;
-import com.pm.hibernate.model.Phone;
+import com.pm.hibernate.model.Order;
+import com.pm.hibernate.model.OrderItem;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 /**
  * Created by pmackiewicz on 2016-02-03.
@@ -26,49 +29,55 @@ public class TestServiceImpl implements TestService {
     private EntityManager entityManager;
 
     @Override
-    public SampleDTO get() {
-        logger.info("===get===");
-        Employee employee = new Employee("Bob", "Way",
-                new BigDecimal(100.50).setScale(2),
-                LocalDate.of(1981, Month.JULY, 17));
-        employee.addPhone( new Phone("home", "613", "792-0001"));
-        employee.addPhone( new Phone("work", "613", "494-1234"));
-        entityManager.persist(employee);
-        logger.info("(1)" + employee);
-        employee.setFirstName("Bobik");
-        employee.setLastName("Wayek");
-        logger.info("(2)" + employee);
+    public SampleDTO insertAll() {
+        logger.info("===insertAll===");
 
-        Employee employee2 = new Employee("Joe", "Smith",
-                new BigDecimal(300.00).setScale(2),
-                LocalDate.of(1941, Month.MARCH, 25));
-        employee2.addPhone( new Phone("work", "416", "892-0005"));
-        entityManager.persist(employee2);
-        logger.info("(3)" + employee2);
+        Order order1 = new Order("ABC0000001", LocalDate.of(2015, Month.JANUARY, 17));
+        entityManager.persist(order1);
+        OrderItem orderItem11 = new OrderItem("A", 1L, new BigDecimal(100.50).setScale(2), order1);
+        order1.addItem(orderItem11);
+        OrderItem orderItem12 = new OrderItem("B", 2L, new BigDecimal(200.00).setScale(2), order1);
+        order1.addItem(orderItem12);
+        OrderItem orderItem13 = new OrderItem("C", 3L, new BigDecimal(40.00).setScale(2), order1);
+        order1.addItem(orderItem13);
 
-        Employee employeeFind = entityManager.find(Employee.class, employee.getId());
-        logger.info("(4)" + employeeFind);
-        Employee employeeFind2 = entityManager.find(Employee.class, employee2.getId());
-        logger.info("(5)" + employeeFind2);
+        Order order2 = new Order("ABC0000002", LocalDate.of(2015, Month.FEBRUARY, 21));
+        entityManager.persist(order2);
+        OrderItem orderItem21 = new OrderItem("A", 3L, new BigDecimal(100.50).setScale(2), order2);
+        order2.addItem(orderItem21);
+        OrderItem orderItem22 = new OrderItem("B", 2L, new BigDecimal(200.00).setScale(2), order2);
+        order2.addItem(orderItem22);
 
-        employeeFind.setFirstName("Bobas");
-        employeeFind.setLastName("Wayas");
-        logger.info("(6)" + employeeFind);
-        entityManager.remove(employeeFind);
-        entityManager.remove(employeeFind2);
+        Order order3 = new Order("ABC0000003", LocalDate.of(2015, Month.MARCH, 2));
+        entityManager.persist(order3);
+        OrderItem orderItem31 = new OrderItem("B", 1L, new BigDecimal(100.50).setScale(2), order3);
+        order3.addItem(orderItem31);
+        OrderItem orderItem32 = new OrderItem("C", 1L, new BigDecimal(200.00).setScale(2), order3);
+        order3.addItem(orderItem32);
 
         return new SampleDTO();
     }
 
     @Override
-    public SampleDTO find() {
-        logger.info("===find===");
+    public SampleDTO findAll() {
+        logger.info("===findAll===");
+
+        TypedQuery<Order> query = entityManager.createQuery("SELECT o FROM Order o", Order.class);
+        List<Order> orderList = query.getResultList();
+
+        orderList.forEach(order -> logger.info(order));
+
         return new SampleDTO();
     }
 
     @Override
-    public SampleDTO delete() {
-        logger.info("===delete===");
+    public SampleDTO deleteAll() {
+        logger.info("===deleteAll===");
+
+//        Query query = entityManager.createQuery("DELETE FROM Order");
+//        int result = query.executeUpdate();
+//        logger.info(result);
+
         return new SampleDTO();
     }
 }

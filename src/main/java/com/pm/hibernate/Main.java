@@ -22,7 +22,12 @@ public class Main {
 	private void run() {
 		try (ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfiguration.class)) {
 			this.controller = ctx.getBean(MyController.class);
-			this.controller.prepare();
+			//
+			this.controller.insertAll();
+			//
+			this.controller.findAll();
+			//
+			this.controller.deleteAll();
 		}
 	}
 }
