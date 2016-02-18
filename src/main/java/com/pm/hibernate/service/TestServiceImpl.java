@@ -74,9 +74,11 @@ public class TestServiceImpl implements TestService {
     public SampleDTO deleteAll() {
         logger.info("===deleteAll===");
 
-//        Query query = entityManager.createQuery("DELETE FROM Order");
-//        int result = query.executeUpdate();
-//        logger.info(result);
+        TypedQuery<Order> query = entityManager.createQuery("SELECT o FROM Order o", Order.class);
+        List<Order> orderList = query.getResultList();
+        for (Order order :  orderList){
+            entityManager.remove(order);
+        }
 
         return new SampleDTO();
     }
